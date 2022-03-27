@@ -27,7 +27,7 @@ extract($displayData);
  */
 $hidePrice = (ComponentHelper::getParams('com_radicalmart')->get('hide_prices', 0) || !empty($product->price['hide']));
 ?>
-<div class="product-block uk-transition-toggle uk-card-body uk-card-small">
+<div class="radicalmart-category__item product-block uk-transition-toggle uk-card-body uk-card-small">
 	<div class="uk-child-width-expand@s uk-grid-divider" uk-grid="">
 		<div>
 			<div class="uk-child-width-expand@m" uk-grid="">

@@ -27,7 +27,7 @@ extract($displayData);
  */
 $hidePrice = (ComponentHelper::getParams('com_radicalmart')->get('hide_prices', 0) || !empty($product->price['hide']));
 ?>
-<div class="product-block uk-transition-toggle">
+<div class="radicalmart-category__item product-block uk-transition-toggle">
 	<div class="uk-overflow-hidden">
 		<div class="uk-position-relative">
 			<a href="<?php echo $product->link; ?>"
