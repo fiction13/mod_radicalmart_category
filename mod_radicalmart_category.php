@@ -1,7 +1,7 @@
 <?php
 /*
  * @package   mod_radicalmart_category
- * @version   1.0.0
+ * @version   1.1.1
  * @author    Dmitriy Vasyukov - https://fictionlabs.ru
  * @copyright Copyright (c) 2022 Fictionlabs. All rights reserved.
  * @license   GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 // Include helper
@@ -39,6 +40,9 @@ $model->setState('filter.categories', $categories);
 $model->setState('filter.published', 1);
 $model->setState('list.limit', (int) $params->get('limit', 12));
 $model->setState('list.ordering', $ordering['order']);
+
+// Set language filter state
+$model->setState('filter.language', Multilanguage::isEnabled());
 
 // Order direction
 if ($ordering['direction'])
