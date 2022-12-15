@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ @package   mod_radicalmart_category
-  ~ @version   1.1.1
+  ~ @version   __DEPLOY_VERSION__
   ~ @author    Dmitriy Vasyukov - https://fictionlabs.ru
   ~ @copyright Copyright (c) 2022 Fictionlabs. All rights reserved.
   ~ @license   GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
   ~ @link      https://fictionlabs.ru/
   -->
 
-<extension version="3.9" type="module" client="site" method="upgrade">
+<extension version="4.2" type="module" client="site" method="upgrade">
     <name>MOD_RADICALMART_CATEGORY</name>
     <author>Dmitriy Vasyukov</author>
-    <creationDate>August 2022</creationDate>
+    <creationDate>December 2022</creationDate>
     <copyright>Copyright (C) 2022 FictionLabs. All rights reserved.</copyright>
     <license>GNU General Public License version 3 or later; see LICENSE</license>
     <authorEmail>info@fictionlabs.ru</authorEmail>
     <authorUrl>https://fictionlabs.ru</authorUrl>
-    <version>1.1.1</version>
+    <version>1.2.1-dev</version>
     <description>MOD_RADICALMART_CATEGORY_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
+    <namespace path="src">Joomla\Module\RadicalmartCategory</namespace>
 
-    <!-- Module language -->
+    <!-- Language -->
     <languages folder="language">
-        <language tag="en-GB">en-GB/en-GB.mod_radicalmart_category.ini</language>
-        <language tag="en-GB">en-GB/en-GB.mod_radicalmart_category.sys.ini</language>
-        <language tag="ru-RU">ru-RU/ru-RU.mod_radicalmart_category.ini</language>
-        <language tag="ru-RU">ru-RU/ru-RU.mod_radicalmart_category.sys.ini</language>
+        <language tag="en-GB">en-GB/mod_radicalmart_category.ini</language>
+        <language tag="en-GB">en-GB/mod_radicalmart_category.sys.ini</language>
+        <language tag="ru-RU">ru-RU/mod_radicalmart_category.ini</language>
+        <language tag="ru-RU">ru-RU/mod_radicalmart_category.sys.ini</language>
     </languages>
 
-    <!-- Module files -->
+    <!--  Files  -->
     <files>
-        <filename module="mod_radicalmart_category">mod_radicalmart_category.php</filename>
-        <folder>src</folder>
+        <folder module="mod_radicalmart_category">src</folder>
+        <folder>services</folder>
         <folder>tmpl</folder>
     </files>
 
     <!-- Module config -->
     <config>
-        <fields name="params" addfieldpath="/administrator/components/com_radicalmart/models/fields">
+        <fields name="params" addfieldprefix="Joomla\Component\RadicalMart\Administrator\Field">
             <fieldset name="basic">
                 <field name="categories"
                        type="categories"
                        label="MOD_RADICALMART_CATEGORY_PARAM_CATEGORY"
                        multiple="true"
+                       layout="joomla.form.field.list-fancy-select"
                        required="true">
                     <option value="-1">MOD_RADICALMART_CATEGORY_CURRENT</option>
-                    <option value="1">JGLOBAL_ROOT</option>
+                    <option value="1">JGLOBAL_ROOT_PARENT</option>
                 </field>
 
                 <field name="limit"

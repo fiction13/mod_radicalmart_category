@@ -1,7 +1,7 @@
 <?php
 /*
  * @package   mod_radicalmart_category
- * @version   1.1.1
+ * @version   __DEPLOY_VERSION__
  * @author    Dmitriy Vasyukov - https://fictionlabs.ru
  * @copyright Copyright (c) 2022 Fictionlabs. All rights reserved.
  * @license   GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\RadicalMart\Site\Helper\MediaHelper;
 
 extract($displayData);
 
@@ -37,7 +38,7 @@ $hidePrice = (ComponentHelper::getParams('com_radicalmart')->get('hide_prices', 
 						   class="uk-height-medium uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-transition-scale-up uk-transition-opaque ">
 							<?php if ($image = $product->image)
 							{
-								$image = RadicalMartHelperMedia::findThumb($image);
+								$image = MediaHelper::findThumb($image);
 								echo HTMLHelper::image($image, htmlspecialchars($product->title),
 									array('class' => 'uk-height-max-medium'));
 							}
