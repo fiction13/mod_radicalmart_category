@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\RadicalMart\Site\Helper\MediaHelper;
 
@@ -47,7 +46,7 @@ if (!$hidePrice)
 						<a href="<?php echo $product->link; ?>"
 						   class="uk-height-medium uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-transition-scale-up uk-transition-opaque ">
 							<?php echo MediaHelper::renderImage(
-								'com_radicalmart.products.list',
+								'mod_radicalmart_category.grid',
 								$product->image,
 								[
 									'alt'     => $product->title,
@@ -69,7 +68,7 @@ if (!$hidePrice)
 											<?php if ($src = $badge->media->get('icon'))
 											{
 												echo MediaHelper::renderImage(
-													'com_radicalmart.categories.badge',
+													'mod_radicalmart_category.grid.badge',
 													$src,
 													[
 														'alt'     => $badge->title,
