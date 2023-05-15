@@ -46,7 +46,7 @@ if (!$hidePrice)
 						<a href="<?php echo $product->link; ?>"
 						   class="uk-height-medium uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-transition-scale-up uk-transition-opaque ">
 							<?php echo MediaHelper::renderImage(
-								'mod_radicalmart_category.grid',
+								'mod_radicalmart_category.list',
 								$product->image,
 								[
 									'alt'     => $product->title,
@@ -68,7 +68,7 @@ if (!$hidePrice)
 											<?php if ($src = $badge->media->get('icon'))
 											{
 												echo MediaHelper::renderImage(
-													'mod_radicalmart_category.grid.badge',
+													'mod_radicalmart_category.list.badge',
 													$src,
 													[
 														'alt'     => $badge->title,
