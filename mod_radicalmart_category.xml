@@ -19,7 +19,7 @@
     <version>1.2.1-dev</version>
     <description>MOD_RADICALMART_CATEGORY_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
-    <namespace path="src">Joomla\Module\RadicalmartCategory</namespace>
+    <namespace path="src">Joomla\Module\RadicalMartCategory</namespace>
 
     <!-- Language -->
     <languages folder="language">
@@ -36,10 +36,21 @@
         <folder>tmpl</folder>
     </files>
 
-    <!-- Module config -->
+    <!-- Config -->
     <config>
         <fields name="params">
             <fieldset name="basic">
+                <field name="mode"
+                       type="list"
+                       label="MOD_RADICALMART_CATEGORY_PARAM_MODE"
+                       default="products"
+                       layout="joomla.form.field.list-fancy-select"
+                       required="true">
+                    <option value="products">MOD_RADICALMART_CATEGORY_PARAM_MODE_PRODUCTS</option>
+                    <option value="metas">MOD_RADICALMART_CATEGORY_PARAM_MODE_METAS</option>
+                    <option value="all">MOD_RADICALMART_CATEGORY_PARAM_MODE_ALL</option>
+                </field>
+
                 <field name="categories"
                        type="categories"
                        label="MOD_RADICALMART_CATEGORY_PARAM_CATEGORY"
@@ -129,6 +140,7 @@
         </fields>
     </config>
 
+    <!-- Layouts -->
     <layouts destination="modules" folder="layouts">
         <folder>radicalmart_category</folder>
     </layouts>

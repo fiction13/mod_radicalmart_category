@@ -8,7 +8,7 @@
  * @link      https://fictionlabs.ru/
  */
 
-namespace Joomla\Module\RadicalmartCategory\Site\Helper;
+namespace Joomla\Module\RadicalMartCategory\Site\Helper;
 
 defined('_JEXEC') or die;
 
@@ -23,7 +23,7 @@ use Joomla\CMS\Factory;
  *
  * @since       1.2.0
  */
-class RadicalmartCategoryHelper
+class CategoryHelper
 {
 	/**
 	 * @var Registry
@@ -58,19 +58,51 @@ class RadicalmartCategoryHelper
 	 */
 	public function getItems()
 	{
+		// Variables
+		$mode = $this->params->get('mode', 'products');
+
+		if ($mode !== 'all')
+		{
+			// Get items
+			$items = ($mode === 'products') ? $this->getProducts() : $this->getMetas();
+		}
+		else
+		{
+			$limit = (int) $this->params->get('limit', 12);
+			$metas = $this->getMetas();
+			$count = count($metas);
+
+			if ($count >= $limit)
+			{
+				return $metas;
+			}
+
+			$products = $this->getProducts($limit - $count);
+			$items    = array_merge($metas, $products);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Get products
+	 *
+	 * @since 1.2.0
+	 */
+	public function getProducts($limit = 0)
+	{
 		if (!$model = Factory::getApplication()->bootComponent('com_radicalmart')->getMVCFactory()->createModel('Products', 'Site', ['ignore_request' => true]))
 		{
 			throw new \Exception(Text::_('MOD_RADICALMART_CATEGORY_ERROR_MODEL_NOT_FOUND'), 500);
 		}
 
-		// Variables
 		$ordering   = $this->getOrdering();
 		$categories = $this->getCategories();
 
 		$model->setState('params', Factory::getApplication()->getParams());
 		$model->setState('filter.categories', $categories);
 		$model->setState('filter.published', 1);
-		$model->setState('list.limit', (int) $this->params->get('limit', 12));
+		$model->setState('list.limit', !$limit ? (int) $this->params->get('limit', 12) : $limit);
 		$model->setState('list.ordering', $ordering['order']);
 
 		// Set language filter state
@@ -90,8 +122,49 @@ class RadicalmartCategoryHelper
 	}
 
 	/**
+	 * Get products
 	 *
-	 * @return false|int
+	 * @since 1.2.0
+	 */
+	public function getMetas()
+	{
+		if (!$model = Factory::getApplication()->bootComponent('com_radicalmart')->getMVCFactory()->createModel('Metas', 'Site', ['ignore_request' => true]))
+		{
+			throw new \Exception(Text::_('MOD_RADICALMART_CATEGORY_ERROR_MODEL_NOT_FOUND'), 500);
+		}
+
+		$ordering   = $this->getOrdering();
+		$categories = $this->getCategories();
+
+		$model->setState('params', Factory::getApplication()->getParams());
+		$model->setState('filter.published', 1);
+		$model->setState('list.limit', (int) $this->params->get('limit', 12));
+		$model->setState('products.ordering', $ordering['order']);
+
+		if ($categories)
+		{
+			$category = reset($categories);
+			$model->setState('category.id', $category);
+		}
+
+		// Set language filter state
+		$model->setState('filter.language', Multilanguage::isEnabled());
+
+		// Order direction
+		if ($ordering['direction'])
+		{
+			$model->setState('list.direction', $ordering['direction']);
+		}
+
+		// Get items
+		$items = $model->getItems();
+
+		return $items;
+	}
+
+	/**
+	 *
+	 * @return array
 	 *
 	 * @since 1.1.0
 	 */
@@ -125,9 +198,9 @@ class RadicalmartCategoryHelper
 			'direction' => ''
 		];
 
-		if ($this->params->get('ordering', 'p.ordering ASC') == 'rand')
+		if ($this->params->get('ordering', 'p.ordering ASC') === 'rand')
 		{
-			$result['order'] = Factory::getDbo()->getQuery(true)->Rand();
+			$result['order'] = Factory::getContainer()->get('DatabaseDriver')->getQuery(true)->Rand();
 		}
 		else
 		{

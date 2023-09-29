@@ -34,8 +34,8 @@ return new class implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->registerServiceProvider(new ModuleDispatcherFactory('\\Joomla\\Module\\RadicalmartCategory'));
-		$container->registerServiceProvider(new HelperFactory('\\Joomla\\Module\\RadicalmartCategory\\Site\\Helper'));
+		$container->registerServiceProvider(new ModuleDispatcherFactory('\\Joomla\\Module\\RadicalMartCategory'));
+		$container->registerServiceProvider(new HelperFactory('\\Joomla\\Module\\RadicalMartCategory\\Site\\Helper'));
 		$container->registerServiceProvider(new Module);
 	}
 };

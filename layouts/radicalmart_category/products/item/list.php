@@ -36,6 +36,9 @@ if (!$hidePrice)
 	$assets->useScript('com_radicalmart.site.cart');
 }
 
+// Load language
+Factory::getApplication()->getLanguage()->load('com_radicalmart');
+
 ?>
 <div class="radicalmart-category__item product-block uk-transition-toggle uk-card-body uk-card-small" <?php if (empty($product->in_stock)) echo 'style="opacity:0.5"'; ?>>
 	<div class="uk-child-width-expand@s uk-grid-divider" uk-grid="">
@@ -46,7 +49,7 @@ if (!$hidePrice)
 						<a href="<?php echo $product->link; ?>"
 						   class="uk-height-medium uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-transition-scale-up uk-transition-opaque ">
 							<?php echo MediaHelper::renderImage(
-								'mod_radicalmart_category.list',
+								'mod_radicalmart_category.products.item.list',
 								$product->image,
 								[
 									'alt'     => $product->title,
@@ -68,7 +71,7 @@ if (!$hidePrice)
 											<?php if ($src = $badge->media->get('icon'))
 											{
 												echo MediaHelper::renderImage(
-													'mod_radicalmart_category.list.badge',
+													'mod_radicalmart_category.products.item.list.badge',
 													$src,
 													[
 														'alt'     => $badge->title,

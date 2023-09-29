@@ -8,7 +8,7 @@
  * @link      https://fictionlabs.ru/
  */
 
-namespace Joomla\Module\RadicalmartCategory\Site\Dispatcher;
+namespace Joomla\Module\RadicalMartCategory\Site\Dispatcher;
 
 \defined('JPATH_PLATFORM') or die;
 
@@ -16,9 +16,10 @@ use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Joomla\CMS\Extension\ModuleInterface;
+use Joomla\CMS\Factory;
 use Joomla\Input\Input;
 use Joomla\CMS\Helper\HelperFactoryAwareTrait;
-use Joomla\Module\RadicalmartCategory\Site\Helper\RadicalmartCategoryHelper;
+use Joomla\Module\RadicalMartCategory\Site\Helper\CategoryHelper;
 
 /**
  * Dispatcher class
@@ -54,9 +55,12 @@ class Dispatcher extends AbstractModuleDispatcher
 	protected function getLayoutData()
 	{
 		$data                    = parent::getLayoutData();
-		$data['items']           = (new RadicalmartCategoryHelper($data['params']))->getItems();
+		$data['items']           = (new CategoryHelper($data['params']))->getItems();
 		$data['mode']            = ComponentHelper::getParams('com_radicalmart')->get('mode', 'shop');
 		$data['moduleclass_sfx'] = htmlspecialchars($data['params']->get('moduleclass_sfx', ''), ENT_COMPAT, 'UTF-8');
+
+		// Load language
+		Factory::getApplication()->getLanguage()->load('com_radicalmart');
 
 		return $data;
 	}

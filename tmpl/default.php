@@ -17,13 +17,16 @@ use Joomla\CMS\Layout\LayoutHelper;
 <?php if (!empty($items)): ?>
     <div class="radicalmart-category <?php echo $moduleclass_sfx; ?>">
         <div class="radicalmart-category__list">
-            <?php foreach ($items as $i => $item): ?>
-                <?php if ($i > 0) echo '<hr class="uk-margin-remove">'; ?>
+			<?php foreach ($items as $i => $item):
+				$layout = ($item->isMeta) ? 'modules.radicalmart_category.metas.' . $item->type . '.item.list'
+					: 'modules.radicalmart_category.products.item.list';
+				?>
+				<?php if ($i > 0) echo '<hr class="uk-margin-remove">'; ?>
                 <div class="item-<?php echo $item->id; ?>">
-                    <?php echo LayoutHelper::render('modules.radicalmart_category.list',
-                        array('product' => $item, 'mode' => $mode, 'params' => $params)); ?>
+					<?php echo LayoutHelper::render($layout,
+						array('product' => $item, 'mode' => $mode, 'params' => $params)); ?>
                 </div>
-            <?php endforeach; ?>
+			<?php endforeach; ?>
         </div>
     </div>
 <?php endif; ?>
