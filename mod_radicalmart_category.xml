@@ -48,7 +48,6 @@
                        required="true">
                     <option value="products">MOD_RADICALMART_CATEGORY_PARAM_MODE_PRODUCTS</option>
                     <option value="metas">MOD_RADICALMART_CATEGORY_PARAM_MODE_METAS</option>
-                    <option value="all">MOD_RADICALMART_CATEGORY_PARAM_MODE_ALL</option>
                 </field>
 
                 <field name="categories"
@@ -59,7 +58,6 @@
                        required="true"
                        addfieldprefix="Joomla\Component\RadicalMart\Administrator\Field">
                     <option value="-1">MOD_RADICALMART_CATEGORY_CURRENT</option>
-                    <option value="1">JGLOBAL_ROOT_PARENT</option>
                 </field>
 
                 <field name="limit"

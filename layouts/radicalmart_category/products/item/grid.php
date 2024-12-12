@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\RadicalMart\Administrator\Helper\ParamsHelper;
 use Joomla\Component\RadicalMart\Site\Helper\MediaHelper;
 
 extract($displayData);
@@ -34,6 +35,17 @@ if (!$hidePrice)
 	$assets = Factory::getApplication()->getDocument()->getWebAssetManager();
 	$assets->getRegistry()->addExtensionRegistryFile('com_radicalmart');
 	$assets->useScript('com_radicalmart.site.cart');
+
+	$params = ParamsHelper::getComponentParams();
+	if ($params->get('radicalmart_js', 1))
+	{
+		$assets->useScript('com_radicalmart.site');
+	}
+
+	if ($params->get('trigger_js', 1))
+	{
+		$assets->useScript('com_radicalmart.site.trigger');
+	}
 }
 
 // Load language

@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\RadicalMart\Administrator\Helper\ParamsHelper;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Factory;
@@ -61,25 +62,8 @@ class CategoryHelper
 		// Variables
 		$mode = $this->params->get('mode', 'products');
 
-		if ($mode !== 'all')
-		{
-			// Get items
-			$items = ($mode === 'products') ? $this->getProducts() : $this->getMetas();
-		}
-		else
-		{
-			$limit = (int) $this->params->get('limit', 12);
-			$metas = $this->getMetas();
-			$count = count($metas);
-
-			if ($count >= $limit)
-			{
-				return $metas;
-			}
-
-			$products = $this->getProducts($limit - $count);
-			$items    = array_merge($metas, $products);
-		}
+		// Get items
+		$items = ($mode === 'products') ? $this->getProducts() : $this->getMetas();
 
 		return $items;
 	}
@@ -89,7 +73,7 @@ class CategoryHelper
 	 *
 	 * @since 1.2.0
 	 */
-	public function getProducts($limit = 0)
+	public function getProducts()
 	{
 		if (!$model = Factory::getApplication()->bootComponent('com_radicalmart')->getMVCFactory()->createModel('Products', 'Site', ['ignore_request' => true]))
 		{
@@ -99,10 +83,10 @@ class CategoryHelper
 		$ordering   = $this->getOrdering();
 		$categories = $this->getCategories();
 
-		$model->setState('params', Factory::getApplication()->getParams());
+		$model->setState('params', ParamsHelper::getComponentParams());
 		$model->setState('filter.categories', $categories);
 		$model->setState('filter.published', 1);
-		$model->setState('list.limit', !$limit ? (int) $this->params->get('limit', 12) : $limit);
+		$model->setState('list.limit', (int) $this->params->get('limit', 12));
 		$model->setState('list.ordering', $ordering['order']);
 
 		// Set language filter state
@@ -112,7 +96,6 @@ class CategoryHelper
 		if ($ordering['direction'])
 		{
 			$model->setState('list.direction', $ordering['direction']);
-
 		}
 
 		// Get items
@@ -136,7 +119,7 @@ class CategoryHelper
 		$ordering   = $this->getOrdering();
 		$categories = $this->getCategories();
 
-		$model->setState('params', Factory::getApplication()->getParams());
+		$model->setState('params', ParamsHelper::getComponentParams());
 		$model->setState('filter.published', 1);
 		$model->setState('list.limit', (int) $this->params->get('limit', 12));
 		$model->setState('products.ordering', $ordering['order']);
