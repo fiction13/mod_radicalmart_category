@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ @package   mod_radicalmart_category
-  ~ @version   2.0.0
+  ~ @version   __DEPLOY_VERSION__
   ~ @author    Dmitriy Vasyukov - https://fictionlabs.ru
   ~ @copyright Copyright (c) 2022 Fictionlabs. All rights reserved.
   ~ @license   GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -16,7 +16,7 @@
     <license>GNU General Public License version 3 or later; see LICENSE</license>
     <authorEmail>info@fictionlabs.ru</authorEmail>
     <authorUrl>https://fictionlabs.ru</authorUrl>
-    <version>2.0.0</version>
+    <version>2.0.1-dev</version>
     <description>MOD_RADICALMART_CATEGORY_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
     <namespace path="src">Joomla\Module\RadicalMartCategory</namespace>
