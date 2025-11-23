@@ -1,7 +1,7 @@
 <?php
 /*
  * @package   RadicalMart Payment - PayKeeper
- * @version   __DEPLOY_VERSION__
+ * @version   2.0.0
  * @author    Dmitriy Vasyukov - https://fictionlabs.ru
  * @copyright Copyright (c) 2023 Fictionlabs. All rights reserved.
  * @license   GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -80,7 +80,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @var string|null
 			 *
-			 * @since  __DEPLOY_VERSION__
+			 * @since  1.9.0
 			 */
 			protected string|null $_radicalmartVersion = null;
 
@@ -238,7 +238,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @return string
 			 *
-			 * @since  __DEPLOY_VERSION__
+			 * @since  1.9.0
 			 */
 			protected function getRadicalMartVersion(): string
 			{
