@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+
 use Joomla\CMS\Layout\LayoutHelper;
 
 ?>
@@ -17,16 +18,14 @@ use Joomla\CMS\Layout\LayoutHelper;
 <?php if (!empty($items)): ?>
     <div class="radicalmart-category <?php echo $moduleclass_sfx; ?>">
         <div class="radicalmart-category__list">
-			<?php foreach ($items as $i => $item):
-				$layout = ($item->isMeta) ? 'modules.radicalmart_category.metas.' . $item->type . '.item.list'
-					: 'modules.radicalmart_category.products.item.list';
-				?>
-				<?php if ($i > 0) echo '<hr class="uk-margin-remove">'; ?>
-                <div class="item-<?php echo $item->id; ?>">
-					<?php echo LayoutHelper::render($layout,
-						array('product' => $item, 'mode' => $mode, 'params' => $params)); ?>
-                </div>
-			<?php endforeach; ?>
+			<?php foreach ($items as $i => $item)
+			{
+				$layout = $product_layout;
+
+				if ($item->isMeta) $layout = $component_layouts ? 'components.radicalmart.metas.' . $item->type . '.item' : 'modules.radicalmart_category.metas.' . $item->type . '.item';
+
+				echo LayoutHelper::render($layout . '.list', array('product' => $item, 'mode' => $mode, 'params' => $params));
+			} ?>
         </div>
     </div>
 <?php endif; ?>

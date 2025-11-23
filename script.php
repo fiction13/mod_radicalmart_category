@@ -12,9 +12,9 @@
 
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
@@ -24,6 +24,7 @@ use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Joomla\Registry\Registry;
 
 return new class () implements ServiceProviderInterface {
 	public function register(Container $container)
@@ -54,7 +55,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumJoomla = '4.2';
+			protected string $minimumJoomla = '5.4';
 
 			/**
 			 * Minimum PHP version required to install the extension.
@@ -63,7 +64,26 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumPhp = '7.4';
+			protected string $minimumPhp = '8.2';
+
+			/**
+			 * Minimum RadicalMart version required to update the extension.
+			 *
+			 * @var  string
+			 *
+			 * @since  1.1.0
+			 */
+			protected string $minimumRadicalMart = '2.9.0';
+
+			/**
+			 * Current RadicalMart version.
+			 *
+			 * @var string|null
+			 *
+			 * @since  __DEPLOY_VERSION__
+			 */
+			protected string|null $_radicalmartVersion = null;
+
 
 			/**
 			 * Constructor.
@@ -140,6 +160,15 @@ return new class () implements ServiceProviderInterface {
 					return false;
 				}
 
+				if ($type === 'update')
+				{
+					// Check RadicalMart version
+					if (!$this->checkRadicalMartVersion())
+					{
+						return false;
+					}
+				}
+
 				return true;
 			}
 
@@ -197,6 +226,63 @@ return new class () implements ServiceProviderInterface {
 				{
 					$app->enqueueMessage(Text::sprintf('MOD_RADICALMART_CATEGORY_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
 						'error');
+
+					return false;
+				}
+
+				return true;
+			}
+
+			/**
+			 * Method to get current RadicalMart version.
+			 *
+			 * @return string
+			 *
+			 * @since  __DEPLOY_VERSION__
+			 */
+			protected function getRadicalMartVersion(): string
+			{
+				if ($this->_radicalmartVersion !== null)
+				{
+					return $this->_radicalmartVersion;
+				}
+
+				// Get current version
+				$db    = $this->db;
+				$query = $db->createQuery()
+					->select('manifest_cache')
+					->from($db->quoteName('#__extensions'))
+					->where($db->quoteName('element') . ' = ' . $db->quote('com_radicalmart'));
+
+				$result = (new Registry($db->setQuery($query)->loadResult()))->get('version');
+
+				$this->_radicalmartVersion = $result;
+
+				return $result;
+			}
+
+			/**
+			 * Method to check RadicalMart version compatible.
+			 *
+			 * @throws  \Exception
+			 *
+			 * @return  bool True on success, False on failure.
+			 *
+			 * @since  1.1.0
+			 */
+			protected function checkRadicalMartVersion(): bool
+			{
+				$radicalmartVersion = $this->getRadicalMartVersion();
+				if (empty($radicalmartVersion))
+				{
+					return true;
+				}
+
+				if (!(version_compare($radicalmartVersion, $this->minimumRadicalMart) >= 0))
+				{
+					$app = Factory::getApplication();
+					$app->enqueueMessage(Text::sprintf('MOD_RADICALMART_CATEGORY_ERROR_COMPATIBLE_RADICALMART',
+						$radicalmartVersion), 'error');
 
 					return false;
 				}

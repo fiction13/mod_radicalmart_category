@@ -84,6 +84,7 @@ class CategoryHelper
 		$categories = $this->getCategories();
 
 		$model->setState('params', ParamsHelper::getComponentParams());
+		$model->setContext('com_radicalmart.category');
 		$model->setState('filter.categories', $categories);
 		$model->setState('filter.published', 1);
 		$model->setState('list.limit', (int) $this->params->get('limit', 12));
@@ -120,15 +121,11 @@ class CategoryHelper
 		$categories = $this->getCategories();
 
 		$model->setState('params', ParamsHelper::getComponentParams());
+		$model->setContext('com_radicalmart.category');
+		$model->setState('filter.categories', $categories);
 		$model->setState('filter.published', 1);
 		$model->setState('list.limit', (int) $this->params->get('limit', 12));
-		$model->setState('products.ordering', $ordering['order']);
-
-		if ($categories)
-		{
-			$category = reset($categories);
-			$model->setState('category.id', $category);
-		}
+		$model->setState('list.ordering', str_replace('p.', 'm.', $ordering['order']));
 
 		// Set language filter state
 		$model->setState('filter.language', Multilanguage::isEnabled());

@@ -10,7 +10,7 @@
 
 namespace Joomla\Module\RadicalMartCategory\Site\Dispatcher;
 
-\defined('JPATH_PLATFORM') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Component\ComponentHelper;
@@ -54,10 +54,12 @@ class Dispatcher extends AbstractModuleDispatcher
 	 */
 	protected function getLayoutData()
 	{
-		$data                    = parent::getLayoutData();
-		$data['items']           = (new CategoryHelper($data['params']))->getItems();
-		$data['mode']            = ComponentHelper::getParams('com_radicalmart')->get('mode', 'shop');
-		$data['moduleclass_sfx'] = htmlspecialchars($data['params']->get('moduleclass_sfx', ''), ENT_COMPAT, 'UTF-8');
+		$data                      = parent::getLayoutData();
+		$data['items']             = (new CategoryHelper($data['params']))->getItems();
+		$data['mode']              = ComponentHelper::getParams('com_radicalmart')->get('mode', 'shop');
+		$data['moduleclass_sfx']   = htmlspecialchars($data['params']->get('moduleclass_sfx', ''), ENT_COMPAT, 'UTF-8');
+		$data['component_layouts'] = $data['params']->get('component_layouts', 1);
+		$data['product_layout']    = $data['component_layouts'] ? 'components.radicalmart.products.item' : 'modules.radicalmart_category.products.item';
 
 		// Load language
 		Factory::getApplication()->getLanguage()->load('com_radicalmart');

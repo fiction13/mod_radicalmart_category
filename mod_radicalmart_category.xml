@@ -8,15 +8,15 @@
   ~ @link      https://fictionlabs.ru/
   -->
 
-<extension version="4.2" type="module" client="site" method="upgrade">
+<extension version="5.4" type="module" client="site" method="upgrade">
     <name>MOD_RADICALMART_CATEGORY</name>
     <author>Dmitriy Vasyukov</author>
-    <creationDate>March 2023</creationDate>
+    <creationDate>December 2024</creationDate>
     <copyright>Copyright (C) 2022 FictionLabs. All rights reserved.</copyright>
     <license>GNU General Public License version 3 or later; see LICENSE</license>
     <authorEmail>info@fictionlabs.ru</authorEmail>
     <authorUrl>https://fictionlabs.ru</authorUrl>
-    <version>1.2.1-dev</version>
+    <version>1.9.1-dev</version>
     <description>MOD_RADICALMART_CATEGORY_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
     <namespace path="src">Joomla\Module\RadicalMartCategory</namespace>
@@ -42,17 +42,17 @@
             <fieldset name="basic">
                 <field name="mode"
                        type="list"
-                       label="MOD_RADICALMART_CATEGORY_PARAM_MODE"
+                       label="MOD_RADICALMART_CATEGORY_PARAMS_MODE"
                        default="products"
                        layout="joomla.form.field.list-fancy-select"
                        required="true">
-                    <option value="products">MOD_RADICALMART_CATEGORY_PARAM_MODE_PRODUCTS</option>
-                    <option value="metas">MOD_RADICALMART_CATEGORY_PARAM_MODE_METAS</option>
+                    <option value="products">MOD_RADICALMART_CATEGORY_PARAMS_MODE_PRODUCTS</option>
+                    <option value="metas">MOD_RADICALMART_CATEGORY_PARAMS_MODE_METAS</option>
                 </field>
 
                 <field name="categories"
                        type="categories"
-                       label="MOD_RADICALMART_CATEGORY_PARAM_CATEGORY"
+                       label="MOD_RADICALMART_CATEGORY_PARAMS_CATEGORY"
                        multiple="true"
                        layout="joomla.form.field.list-fancy-select"
                        required="true"
@@ -62,23 +62,22 @@
 
                 <field name="limit"
                        type="integer"
-                       label="MOD_RADICALMART_CATEGORY_PARAM_LIMIT"
+                       label="MOD_RADICALMART_CATEGORY_PARAMS_LIMIT"
                        first="1" last="100" step="1" default="12"/>
 
                 <field name="ordering" type="list"
-                       label="MOD_RADICALMART_CATEGORY_PARAM_ORDERING"
-                       default="p.ordering ASC">
-                    <option value="p.ordering ASC">MOD_RADICALMART_CATEGORY_PARAM_ORDERING_ORDERING</option>
-                    <option value="price ASC">MOD_RADICALMART_CATEGORY_PARAM_ORDERING_PRICE_ASC</option>
-                    <option value="price DESC">MOD_RADICALMART_CATEGORY_PARAM_ORDERING_PRICE_DESC</option>
-                    <option value="p.created DESC">MOD_RADICALMART_CATEGORY_PARAM_ORDERING_CREATED</option>
-                    <option value="p.title ASC">MOD_RADICALMART_CATEGORY_PARAM_ORDERING_TITLE</option>
-                    <option value="rand">MOD_RADICALMART_CATEGORY_PARAM_ORDERING_RAND</option>
+                       label="MOD_RADICALMART_CATEGORY_PARAMS_ORDERING"
+                       default="ordering_date DESC">
+                    <option value="p.title ASC">MOD_RADICALMART_CATEGORY_PARAMS_ORDERING_TITLE_ASC</option>
+                    <option value="p.title DESC">MOD_RADICALMART_CATEGORY_PARAMS_ORDERING_TITLE_DESC</option>
+                    <option value="p.created ASC">MOD_RADICALMART_CATEGORY_PARAMS_ORDERING_CREATED_ASC</option>
+                    <option value="p.created DESC">MOD_RADICALMART_CATEGORY_PARAMS_ORDERING_CREATED_DESC</option>
+                    <option value="rand">MOD_RADICALMART_CATEGORY_PARAMS_ORDERING_RAND</option>
                 </field>
 
-                <field name="show_category"
+                <field name="component_layouts"
                        type="radio"
-                       label="MOD_RADICALMART_CATEGORY_PARAM_SHOW_CATEGORY"
+                       label="MOD_RADICALMART_CATEGORY_PARAMS_COMPONENT_LAYOUTS"
                        class="btn-group btn-group-yesno"
                        default="1"
                        filter="integer"
@@ -93,14 +92,6 @@
                        description="JFIELD_ALT_MODULE_LAYOUT_DESC"
                        class="form-select"
                 />
-
-                <field name="cols"
-                       type="integer"
-                       label="MOD_RADICALMART_CATEGORY_PARAM_COLS"
-                       first="1" last="5" step="1" default="3"
-                       showon="layout:_:grid"
-                />
-
             </fieldset>
 
             <fieldset name="advanced">

@@ -16,17 +16,15 @@ use Joomla\CMS\Layout\LayoutHelper;
 
 <?php if (!empty($items)): ?>
     <div class="radicalmart-category <?php echo $moduleclass_sfx; ?>">
-        <div class="uk-grid-divider uk-grid-medium radicalmart-category__list" uk-grid
-             uk-height-match="target: > div > .uk-card >.uk-card-body,> div > .uk-card >.uk-card-footer > .uk-grid; row:false">
-			<?php foreach ($items as $i => $item):
-				$layout = ($item->isMeta) ? 'modules.radicalmart_category.metas.' . $item->type . '.item.list'
-					: 'modules.radicalmart_category.products.item.list';
-				?>
-                <div class="uk-width-1-<?php echo $params->get('cols'); ?>@s">
-					<?php echo LayoutHelper::render($layout,
-						array('product' => $item, 'mode' => $mode, 'params' => $params)); ?>
-                </div>
-			<?php endforeach; ?>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 radicalmart-category__grid">
+			<?php foreach ($items as $item)
+			{
+				$layout = $product_layout;
+
+				if ($item->isMeta) $layout = $component_layouts ? 'components.radicalmart.metas.' . $item->type . '.item' : 'modules.radicalmart_category.metas.' . $item->type . '.item';
+
+				echo '<div class="mb-3">' . LayoutHelper::render($layout . '.grid', ['product' => $item, 'mode' => $mode]) . '</div>';
+			} ?>
         </div>
     </div>
 <?php endif; ?>
